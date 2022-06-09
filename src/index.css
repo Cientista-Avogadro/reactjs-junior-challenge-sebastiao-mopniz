@@ -10,6 +10,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html::-webkit-scrollbar {
+                        width: 4px;
+                        height:4px;
+                      }
+html::-webkit-scrollbar-track{
+                              width: 6px;
+                            }
+html::-webkit-scrollbar-thumb {
+                              background: #CB4455;
+                              borderRadius: 24px;
+                            }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -28,7 +40,7 @@ code {
   margin: 5px;
   border-radius: 5px;
   border: 1px solid #C5C5C5;
-  color: #001;
+  color: #ccc;
 }
 
 .paginationBtns a:hover {

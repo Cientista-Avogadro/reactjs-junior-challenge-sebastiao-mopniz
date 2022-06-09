@@ -16,7 +16,8 @@ import {createNewClient, editClient} from "../../helpers/crudOperator";
 import {useForm} from "react-hook-form";
 import {FileContainer, FileInput, Image, LoadImage} from "./CustomButton";
 import {BiImageAdd} from "react-icons/all";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {IinitialProps} from "../../redux/store";
 
 interface ICustomButtonProps{
     props?:any
@@ -42,6 +43,7 @@ export  const CustomButtonIcon = ({Icon, type, dataClient}:ICustomButtonProps)=>
             setImage(URL.createObjectURL(event.target.files[0]));
         }
     };
+    const {theme } = useSelector((state: IinitialProps) => state);
 
 
 
@@ -101,8 +103,8 @@ export  const CustomButtonIcon = ({Icon, type, dataClient}:ICustomButtonProps)=>
                     size={'xl'}
                 >
                     <ModalOverlay />
-                    <ModalContent>
-                        <ModalHeader textAlign={'center'} borderBottom={'1px solid #828282'} w={'100%'} mb={'20px'}>Dados do Cliente</ModalHeader>
+                    <ModalContent bgColor={theme!=='white' ? 'black':'white'}>
+                        <ModalHeader color={theme=='white' ? 'black':'white'} textAlign={'center'} borderBottom={'1px solid '.concat(theme=='white' ? 'black':'white')} w={'100%'} mb={'20px'}>Dados do Cliente</ModalHeader>
 
                         <ModalBody
                         >
@@ -116,46 +118,46 @@ export  const CustomButtonIcon = ({Icon, type, dataClient}:ICustomButtonProps)=>
                             >
                                 <GridItem>
                                     <FormControl>
-                                        <Input  placeholder='Nome' isRequired  {...register("name")}/>
+                                        <Input  placeholder='Nome' isRequired  {...register("name")} borderColor={theme=='white' ? 'black':'white'} _placeholder={{color:theme==='white' ? 'black':'rgba(255,255,255,0.2)' }} color={theme==='white' ? 'black':'white'}/>
                                     </FormControl>
                                 </GridItem>
 
                                 <GridItem>
                                     <FormControl>
-                                        <Input placeholder='Empresa' {...register("company")}/>
+                                        <Input placeholder='Empresa' {...register("company")} borderColor={theme=='white' ? 'black':'white'} _placeholder={{color:theme==='white' ? 'black':'rgba(255,255,255,0.2)' }} color={theme==='white' ? 'black':'white'}/>
                                     </FormControl>
                                 </GridItem>
 
                                 <GridItem>
                                     <FormControl >
-                                        <Input  placeholder='Telefone' {...register("phone")}/>
+                                        <Input  placeholder='Telefone' {...register("phone")} borderColor={theme=='white' ? 'black':'white'} _placeholder={{color:theme==='white' ? 'black':'rgba(255,255,255,0.2)' }} color={theme==='white' ? 'black':'white'}/>
                                     </FormControl>
                                 </GridItem>
 
                                 <GridItem>
                                     <FormControl >
-                                        <Input placeholder='Email' type={'email'} {...register("email")} isRequired/>
+                                        <Input placeholder='Email' type={'email'} {...register("email")} isRequired borderColor={theme=='white' ? 'black':'white'} _placeholder={{color:theme==='white' ? 'black':'rgba(255,255,255,0.2)' }} color={theme==='white' ? 'black':'white'}/>
                                     </FormControl>
                                 </GridItem>
 
                                 <GridItem colSpan={2}>
                                     <FormControl >
-                                        <Input  placeholder='address' {...register("address")}/>
+                                        <Input  placeholder='address' {...register("address")} borderColor={theme=='white' ? 'black':'white'} _placeholder={{color:theme==='white' ? 'black':'rgba(255,255,255,0.2)' }} color={theme==='white' ? 'black':'white'}/>
                                     </FormControl>
                                 </GridItem>
 
                                 <GridItem colSpan={2} >
                                     <FormControl  >
-                                        <Textarea  placeholder='Notas'  {...register("note")}/>
+                                        <Textarea  placeholder='Notas'  {...register("note")} borderColor={theme=='white' ? 'black':'white'} _placeholder={{color:theme==='white' ? 'black':'rgba(255,255,255,0.2)' }} color={theme==='white' ? 'black':'white'}/>
                                     </FormControl>
                                 </GridItem>
 
 
                                 <GridItem colSpan={2} display={'flex'} justifyContent={'center'}>
-                                    <Button bgColor='#BE152A' mr={3}  type={'submit'} color={'#fff'}>
-                                        Save
+                                    <Button bgColor='blue' mr={3}  type={'submit'} color={'#fff'} _active={{backgroundColor: ''}} _hover={{transform:'scale(1.1)'}}>
+                                        Criar
                                     </Button>
-                                    <Button onClick={onClose} bgColor={'#9E9E9E'} color={'#fff'}>Cancel</Button>
+                                    <Button onClick={onClose} bgColor={'red'} color={'#fff'} _active={{backgroundColor: ''}} _hover={{transform:'scale(1.1)'}}>Cancelar</Button>
                                 </GridItem>
                             </form>
 
@@ -165,7 +167,7 @@ export  const CustomButtonIcon = ({Icon, type, dataClient}:ICustomButtonProps)=>
             </>
             :
             <>
-                <Icon onClick={onOpen} />
+                <Icon onClick={onOpen} color={theme!=='white' ? 'black':'white'}/>
                 <Modal
                     initialFocusRef={initialRef}
                     finalFocusRef={finalRef}
@@ -174,19 +176,24 @@ export  const CustomButtonIcon = ({Icon, type, dataClient}:ICustomButtonProps)=>
                     size={'xl'}
                 >
                     <ModalOverlay />
-                    <ModalContent>
+                    <ModalContent bgColor={theme!=='white' ? 'black':'white'}>
                         <ModalHeader
                             textAlign={'center'}
-                            borderBottom={'1px solid #828282'}
+                            borderBottom={'1px solid '.concat(theme=='white' ? 'black':'white')}
+                            color={theme=='white' ? 'black':'white'}
                             w={'100%'}
                             mb={'20px'}>Dados do Cliente</ModalHeader>
                         <ModalBody
                         >
-                            <LoadImage>
-                                <Image src={dataClient?.image || getImage}/>
-                                <FileContainer>
-                                    <label htmlFor="photo">
-                                        <BiImageAdd />
+                            <LoadImage >
+                                <Image src={dataClient?.image || ''} style={{
+                                    border: '1px solid '.concat(theme=='white' ? 'black':'white')
+                                }}/>
+                                <FileContainer style={{
+                                    backgroundColor: theme=='white' ? 'black':'white'
+                                }}>
+                                    <label htmlFor="photo" style={{color:theme!=='white' ? 'black':'white'}}>
+                                        <BiImageAdd color={theme!=='white' ? 'black':'white'}/>
                                         Carregar...
                                     </label>
                                     <FileInput
@@ -205,36 +212,36 @@ export  const CustomButtonIcon = ({Icon, type, dataClient}:ICustomButtonProps)=>
                             }}>
                                 <GridItem>
                                     <FormControl>
-                                        <Input  placeholder='Nome' isRequired  {...registerEdited("name")} defaultValue={dataClient?.name}/>
+                                        <Input  placeholder='Nome' isRequired borderColor={theme=='white' ? 'black':'white'}  {...registerEdited("name")} defaultValue={dataClient?.name} _placeholder={{color:theme==='white' ? 'black':'rgba(255,255,255,0.2)' }} color={theme==='white' ? 'black':'white'}/>
                                     </FormControl>
                                 </GridItem>
 
                                 <GridItem>
                                     <FormControl>
-                                        <Input placeholder='Empresa' {...registerEdited("company")} defaultValue={dataClient?.company}/>
+                                        <Input placeholder='Empresa' {...registerEdited("company")} borderColor={theme=='white' ? 'black':'white'} defaultValue={dataClient?.company} _placeholder={{color:theme==='white' ? 'black':'rgba(255,255,255,0.2)' }} color={theme==='white' ? 'black':'white'}/>
                                     </FormControl>
                                 </GridItem>
 
                                 <GridItem>
                                     <FormControl >
-                                        <Input  placeholder='Telefone' {...registerEdited("phone")} defaultValue={dataClient?.phone}/>
+                                        <Input  placeholder='Telefone' {...registerEdited("phone")} borderColor={theme=='white' ? 'black':'white'} defaultValue={dataClient?.phone}  _placeholder={{color:theme==='white' ? 'black':'rgba(255,255,255,0.2)' }} color={theme==='white' ? 'black':'white'}/>
                                     </FormControl>
                                 </GridItem>
 
                                 <GridItem>
                                     <FormControl >
-                                        <Input placeholder='Email' type={'email'} {...registerEdited("email")} defaultValue={dataClient?.email} isRequired/>
+                                        <Input placeholder='Email' type={'email'} {...registerEdited("email")} borderColor={theme=='white' ? 'black':'white'} defaultValue={dataClient?.email} isRequired _placeholder={{color:theme==='white' ? 'black':'rgba(255,255,255,0.2)' }} color={theme==='white' ? 'black':'white'}/>
                                     </FormControl>
                                 </GridItem>
 
                                 <GridItem colSpan={2}>
                                     <FormControl >
-                                        <Input  placeholder='address' {...registerEdited("address")} defaultValue={dataClient?.address}/>
+                                        <Input  placeholder='address' {...registerEdited("address")} defaultValue={dataClient?.address} borderColor={theme=='white' ? 'black':'white'} _placeholder={{color:theme==='white' ? 'black':'rgba(255,255,255,0.2)' }} color={theme==='white' ? 'black':'white'}/>
                                     </FormControl>
                                 </GridItem>
                                 <GridItem colSpan={1}>
                                     <FormControl >
-                                        <Checkbox defaultChecked={checked} onChange={({target})=>setChecked(target.checked)}>
+                                        <Checkbox defaultChecked={checked} onChange={({target})=>setChecked(target.checked)} borderColor={theme=='white' ? 'black':'white'} color={theme=='white' ? 'black':'white'} >
                                             {checked ? 'Activo':'Inativo'}
                                         </Checkbox>
                                     </FormControl>
@@ -242,15 +249,15 @@ export  const CustomButtonIcon = ({Icon, type, dataClient}:ICustomButtonProps)=>
 
                                 <GridItem colSpan={2} >
                                     <FormControl  >
-                                        <Textarea  placeholder='Notas'  {...registerEdited("note")} defaultValue={dataClient?.note}/>
+                                        <Textarea  placeholder='Notas'  {...registerEdited("note")} borderColor={theme=='white' ? 'black':'white'} defaultValue={dataClient?.note} _placeholder={{color:theme==='white' ? 'black':'rgba(255,255,255,0.2)' }} color={theme==='white' ? 'black':'white'}/>
                                     </FormControl>
                                 </GridItem>
 
                                 <GridItem colSpan={2} display={'flex'} justifyContent={'center'}>
-                                    <Button bgColor='blue' mr={3}  type={'submit'} color={'#fff'}>
-                                        Save
+                                    <Button bgColor='blue' mr={3}  type={'submit'} color={'#fff'} _active={{backgroundColor: ''}} _hover={{transform:'scale(1.1)'}}>
+                                        Editar
                                     </Button>
-                                    <Button onClick={onClose} bgColor={'#9E9E9E'} color={'#fff'}>Cancel</Button>
+                                    <Button onClick={onClose} bgColor={'red'} color={'#fff'} _active={{backgroundColor: ''}} _hover={{transform:'scale(1.1)'}}>Cancelar</Button>
                                 </GridItem>
                             </form>
 

@@ -7,6 +7,7 @@ export interface IinitialProps {
     loading?: boolean
     searchText:string
     image:string
+    theme:string
 }
 
 const initialState: IinitialProps = {
@@ -14,7 +15,8 @@ const initialState: IinitialProps = {
     currentCard: null,
     loading: false,
     searchText:'',
-    image:''
+    image:'',
+    theme:''
 };
 
 interface stateStore {

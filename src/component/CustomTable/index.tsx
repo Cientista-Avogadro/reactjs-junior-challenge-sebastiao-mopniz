@@ -16,10 +16,11 @@ import { CustomButtonIcon } from '../CustomButtonIcon';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
+import {IinitialProps} from "../../redux/store";
 
 export const CustomTable = () => {
   const [data, setData] = useState<IClientsProps[]>([]);
-  const { searchText, image } = useSelector((state: any) => state);
+  const { searchText, theme } = useSelector((state: IinitialProps) => state);
   const dispatch = useDispatch();
   const toast = useToast();
   const [loading, setLoading] = useState<boolean>(true);
@@ -41,12 +42,24 @@ export const CustomTable = () => {
 
   return (
     <Box>
-        <TableContainer overflowY={'auto'} h={'300px'}>
-            <Table variant='simple' >
+        <TableContainer overflowY={'auto'} h={'300px'} css={{
+            '&::-webkit-scrollbar': {
+                width: '4px',
+                height:'4px'
+            },
+            '&::-webkit-scrollbar-track': {
+                width: '6px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+                background: '#CB4455',
+                borderRadius: '24px',
+            },
+        }}>
+            <Table variant='unstyled' >
                 <Thead>
-                    <Tr>
-                        <th>ação</th>
-                        <th>Foto</th>
+                    <Tr color={theme!=='white' ? 'black':'white' } >
+                        <Th>ação</Th>
+                        <Th>Foto</Th>
                         <Th>Nome</Th>
                         <Th>Empresa</Th>
                         <Th>Telefone</Th>
@@ -56,7 +69,7 @@ export const CustomTable = () => {
                         <Th>Status</Th>
                     </Tr>
                 </Thead>
-                <Tbody>
+                <Tbody >
                     {currentItems
                         ?.filter(
                             client =>
@@ -69,41 +82,47 @@ export const CustomTable = () => {
                         )
                         ?.slice(pagesVisited, pagesVisited + usersPerPage)
                         ?.map((client, index) => (
-                            <Tr key={client?.id}>
-                                <Td display={'flex'} gap={'10px'} alignItems='center' p={5}>
-                                    <CustomButtonIcon
-                                        Icon={FiEdit}
-                                        type={'edit'}
-                                        dataClient={client}
-                                    />
-                                    <MdDelete
-                                        onClick={() => {
-                                            currentItems?.splice(index, 1);
-                                            deleteClient(client.id);
-                                            toast({
-                                                title: 'Cliente apagado com Sucesso.',
-                                                description: 'Nós deletamos seus dados.',
-                                                status: 'info',
-                                                duration: 5000,
-                                                isClosable: true,
-                                            });
-                                        }}
-                                    />
+                            <Tr key={client?.id} color={theme!=='white' ? 'black':'white'} borderTop={'1px solid'.concat(theme!=='white' ? '#000' :'#fff')} _hover={{
+                                backgroundColor: theme!=='white' ? 'rgba(0,0,0,0.1)':'rgba(48, 46, 47,0.8)'
+                            }}>
+                                <Td >
+                                    <Flex gap={'10px'} align={'center'}>
+                                        <CustomButtonIcon
+                                            Icon={FiEdit}
+                                            type={'edit'}
+                                            dataClient={client}
+                                        />
+                                        <MdDelete
+                                            onClick={() => {
+                                                currentItems?.splice(index, 1);
+                                                deleteClient(client.id);
+                                                toast({
+                                                    title: 'Cliente apagado com Sucesso.',
+                                                    description: 'Nós deletamos seus dados.',
+                                                    status: 'info',
+                                                    duration: 5000,
+                                                    isClosable: true,
+                                                });
+                                            }}
+                                            color={theme!=='white' ? 'black':'white' }
+                                        />
+                                    </Flex>
+
                                 </Td>
-                                <td>
+                                <Td>
                                     {client?.image ? (
                                         <img
                                             src={client?.image}
                                             alt='client'
                                             style={{
-                                                width: '30px',
-                                                height: '30px',
+                                                width: '20px',
+                                                height: '20px',
                                             }}
                                         />
                                     ) : (
                                         <MdHideImage />
                                     )}
-                                </td>
+                                </Td>
                                 <Td>{client?.name}</Td>
                                 <Td>{client?.company}</Td>
                                 <Td>{client?.phone}</Td>
